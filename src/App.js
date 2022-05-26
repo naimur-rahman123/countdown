@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
+import Header from './components/Header';
+import CountdownTimer from './components/CountdownTimer';
 import './App.css';
 
 function App() {
+  const [year, setYear] = useState(new Date().getFullYear() + 1);
+
+  useEffect(() => {
+    const interval = setInterval(
+      () => setYear(new Date().getFullYear() + 1),
+      1000
+    );
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <CountdownTimer date={`Jan 01 ${year}`} />
     </div>
   );
 }
